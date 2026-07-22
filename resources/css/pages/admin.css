@@ -1,0 +1,120 @@
+/* ══════════════════════════════════════════════
+   ADMIN PAGES
+══════════════════════════════════════════════ */
+
+.admin-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+.admin-page-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 4px;
+}
+.admin-page-sub { font-size: 14px; color: var(--text-muted); margin: 0; }
+
+/* Form card */
+.form-card {
+    background: var(--white);
+    border: 1px solid var(--mist);
+    border-radius: var(--radius-md);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* Enquiry detail */
+.enquiry-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 24px;
+}
+.enquiry-field-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+.enquiry-field-value { font-size: 15px; color: var(--charcoal); }
+.enquiry-message-box {
+    font-size: 15px;
+    color: var(--charcoal);
+    line-height: 1.75;
+    background: var(--ivory);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+}
+
+/* Table actions */
+.table-actions { display: flex; gap: 12px; align-items: center; }
+.action-link-blue { font-size: 12px; color: var(--blue); text-decoration: none; }
+.action-link-gold { font-size: 12px; color: var(--gold); text-decoration: none; font-weight: 500; }
+.action-link-red { font-size: 12px; color: var(--red); background: none; border: none; cursor: pointer; padding: 0; font-family: var(--font-body); }
+
+/* Status dropdown in table */
+.status-select {
+    font-size: 12px;
+    padding: 4px 8px;
+    border: 1px solid var(--mist);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    cursor: pointer;
+    font-family: var(--font-body);
+}
+
+/* Highlighted unread row */
+.row-unread { background: #FFFBF0; }
+
+/* Card header with action */
+.card-header-row {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--mist);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.card-header-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 0;
+}
+.card-header-link {
+    font-size: 13px;
+    color: var(--gold);
+    text-decoration: none;
+}
+
+/* Back link */
+.back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 24px;
+    transition: color .15s;
+}
+.back-link:hover { color: var(--navy); }
+
+/* Status update form */
+.status-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .enquiry-detail-grid { grid-template-columns: 1fr; }
+    .admin-page-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+}

@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    /* Colours */
+    --ivory:       #FAF8F3;
+    --ivory-dark:  #F0EBE1;
+    --mist:        #EDE5D8;
+    --gold:        #B8952A;
+    --gold-light:  #F5EDD1;
+    --gold-dark:   #7A6018;
+    --navy:        #1A3A5C;
+    --navy-mid:    #2A5080;
+    --blue:        #378ADD;
+    --charcoal:    #2C2C2C;
+    --text-body:   #444444;
+    --text-muted:  #888888;
+    --white:       #FFFFFF;
+    --red:         #C0392B;
+    --green:       #1D9E75;
+
+    /* Typography */
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'Inter', system-ui, sans-serif;
+
+    /* Spacing */
+    --space-xs:  4px;
+    --space-sm:  8px;
+    --space-md:  16px;
+    --space-lg:  24px;
+    --space-xl:  48px;
+    --space-2xl: 80px;
+
+    /* Border radius */
+    --radius-sm:  6px;
+    --radius-md:  12px;
+    --radius-lg:  20px;
+
+    /* Shadows */
+    --shadow-sm:   0 2px 8px rgba(0,0,0,.07);
+    --shadow-md:   0 6px 24px rgba(0,0,0,.10);
+    --shadow-lg:   0 12px 40px rgba(0,0,0,.13);
+    --shadow-gold: 0 8px 32px rgba(184,149,42,.18);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--font-body);
+    background: var(--ivory);
+    color: var(--charcoal);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+button { font-family: var(--font-body); cursor: pointer; border: none; background: none; }
