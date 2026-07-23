@@ -2,76 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Template;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
 class TemplateController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $templates = Template::with('category')->latest()->paginate(20);
-        return view('admin.templates.index', compact('templates'));
+        $categories = Category::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        $templates = Template::where('status', 'active')
+            ->with('category')
+            ->when($request->category, function ($query) use ($request) {
+                $query->whereHas('category', fn($q) =>
+                    $q->where('slug', $request->category)
+                );
+            })
+            ->when($request->search, function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->search . '%')
+                      ->orWhere('short_description', 'like', '%' . $request->search . '%');
+            })
+            ->paginate(12);
+
+        return view('templates.index', compact('templates', 'categories'));
     }
 
-    public function create()
+    public function show(string $slug)
     {
-        $categories = Category::where('is_active', true)->orderBy('sort_order')->get();
-        return view('admin.templates.create', compact('categories'));
+        $template = Template::where('status', 'active')
+            ->where('slug', $slug)
+            ->with(['category', 'features', 'pages', 'screenshots'])
+            ->firstOrFail();
+
+        $template->increment('view_count');
+
+        return view('templates.show', compact('template'));
     }
 
-    public function store(Request $request)
+    public function byCategory(string $slug)
     {
-        $validated = $request->validate([
-            'category_id'       => 'required|exists:categories,id',
-            'name'              => 'required|string|max:150',
-            'slug'              => 'required|string|unique:templates,slug',
-            'short_description' => 'required|string|max:300',
-            'status'            => 'required|in:active,inactive,draft',
-            'meta_title'        => 'nullable|string|max:150',
-            'meta_description'  => 'nullable|string|max:300',
-        ]);
+        $category = Category::where('slug', $slug)->firstOrFail();
 
-        Template::create($validated);
+        $categories = Category::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
 
-        return redirect()->route('admin.templates.index')
-                         ->with('success', 'Template created successfully.');
+        $templates = Template::where('status', 'active')
+            ->where('category_id', $category->id)
+            ->with('category')
+            ->paginate(12);
+
+        return view('templates.index', compact('templates', 'categories', 'category'));
     }
 
-    public function edit(Template $template)
+    public function preview(string $slug)
     {
-        $categories = Category::where('is_active', true)->orderBy('sort_order')->get();
-        return view('admin.templates.edit', compact('template', 'categories'));
-    }
+        $template = Template::where('status', 'active')
+            ->where('slug', $slug)
+            ->with('category')
+            ->firstOrFail();
 
-    public function update(Request $request, Template $template)
-    {
-        $validated = $request->validate([
-            'category_id'       => 'required|exists:categories,id',
-            'name'              => 'required|string|max:150',
-            'slug'              => 'required|string|unique:templates,slug,' . $template->id,
-            'short_description' => 'required|string|max:300',
-            'status'            => 'required|in:active,inactive,draft',
-            'meta_title'        => 'nullable|string|max:150',
-            'meta_description'  => 'nullable|string|max:300',
-        ]);
+        $viewName = 'business-templates.' . $template->category->slug . '.index';
 
-        $template->update($validated);
-
-        return redirect()->route('admin.templates.index')
-                         ->with('success', 'Template updated successfully.');
-    }
-
-    public function destroy(Template $template)
-    {
-        $template->delete();
-        return redirect()->route('admin.templates.index')
-                         ->with('success', 'Template deleted.');
-    }
-
-    public function show(Template $template)
-    {
-        return redirect()->route('templates.show', $template->slug);
+        return view($viewName, compact('template'));
     }
 }
