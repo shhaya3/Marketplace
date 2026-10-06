@@ -1,20 +1,21 @@
 @extends('layouts.app')
 
-@section('title', 'About — BizMarket')
-@section('meta_description', 'BizMarket builds professional website templates for Indian local businesses. Learn our story, mission, and the team behind the product.')
+@section('title', 'About Us — BizMarket')
+@section('meta_description', 'Learn about BizMarket — helping Indian local businesses get professional websites live within 48 hours.')
 
 @section('content')
 
 {{-- Hero --}}
 <section class="section about-hero">
     <div class="container">
-        <nav class="breadcrumb" aria-label="Breadcrumb">
+        {{-- Elegant fade up --}}
+        <nav class="breadcrumb reveal-up" aria-label="Breadcrumb">
             <a href="{{ route('home') }}">Home</a>
             <span>›</span>
             <span>About</span>
         </nav>
         <div class="about-hero-inner">
-            <div>
+            <div class="reveal-up">
                 <p class="section-label">Our story</p>
                 <h1 class="page-title">Built for India's<br/><em>local businesses</em></h1>
                 <p class="about-hero-body">
@@ -23,22 +24,25 @@
                     BizMarket exists to fix that — with ready-made, affordable websites
                     that work from day one.
                 </p>
-                <div class="about-stats">
+                {{-- stats-bar-inner triggers the number counting JS, stagger fades them in sequentially --}}
+                <div class="about-stats stats-bar-inner ">
                     <div class="about-stat">
-                        <div class="about-stat-num">11</div>
+                        <div class="about-stat-num stats-bar-number">11</div>
                         <div class="about-stat-lbl">Categories</div>
                     </div>
                     <div class="about-stat">
-                        <div class="about-stat-num">240+</div>
+                        <div class="about-stat-num stats-bar-number">240+</div>
                         <div class="about-stat-lbl">Businesses</div>
                     </div>
                     <div class="about-stat">
-                        <div class="about-stat-num">48h</div>
+                        <div class="about-stat-num stats-bar-number">48h</div>
                         <div class="about-stat-lbl">Avg launch</div>
                     </div>
                 </div>
             </div>
-            <div class="about-hero-cards" aria-hidden="true">
+            
+            {{-- stagger automatically animates the children inside it sequentially --}}
+            <div class="about-hero-cards stagger" aria-hidden="true">
                 <div class="about-hero-card">
                     <div class="about-hero-card-icon" style="background:var(--gold-light)">🎯</div>
                     <div>
@@ -67,7 +71,7 @@
 
 {{-- Mission --}}
 <section class="about-mission">
-    <div class="container text-center">
+    <div class="container text-center reveal-up">
         <p class="section-label" style="color:rgba(255,255,255,.5);">What we believe</p>
         <blockquote class="mission-quote">
             "Every local business in India deserves a website that
@@ -82,11 +86,13 @@
 {{-- Values --}}
 <section class="section bg-ivory">
     <div class="container">
-        <div class="section-header text-center">
+        <div class="section-header text-center reveal-up">
             <p class="section-label">What drives us</p>
             <h2 class="section-title">Our values</h2>
         </div>
-        <div class="values-grid">
+        
+        {{-- stagger will ripple the 3 value cards into view one by one --}}
+        <div class="values-grid stagger">
             <div class="value-card">
                 <div class="value-icon">🎯</div>
                 <h3 class="value-title">Purpose over template</h3>
@@ -108,7 +114,7 @@
 
 {{-- CTA --}}
 <section class="cta-band">
-    <div class="container text-center">
+    <div class="container text-center reveal-up">
         <h2 class="cta-title">Ready to get your business online?</h2>
         <p class="cta-subtitle">Browse our template library or send us a message.</p>
         <div class="cta-actions">

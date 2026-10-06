@@ -67,6 +67,8 @@ class TemplateController extends Controller
 
         $viewName = 'business-templates.' . $template->category->slug . '.index';
 
-        return view($viewName, compact('template'));
+        return response()
+            ->view($viewName, compact('template'))
+            ->header('X-Robots-Tag', 'noindex, follow');
     }
 }

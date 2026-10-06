@@ -1,15 +1,57 @@
 @extends('layouts.app')
 
 @section('title', 'BizMarket — Website Templates for Indian Local Businesses')
-@section('meta_description', 'Professional website templates for hospitals, schools, restaurants, hotels and more Indian business types.')
+@section('meta_description', 'Professional, ready-made website templates for hospitals, schools, restaurants, hotels, and 7 more Indian business types. Get your website live in 48 hours.')
+@section('og_title', 'BizMarket — Get Your Business Online Today')
+@section('og_description', '11 business categories. Browse, preview, and launch a professional website in 48 hours.')
 
 @section('content')
 
+@push('structured_data')
+@php
+$schema = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'Organization',
+            'name' => 'BizMarket',
+            'url' => url('/'),
+            'description' => 'Professional, ready-made website templates for Indian local businesses.',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'addressLocality' => 'Nagpur',
+                'addressRegion' => 'Maharashtra',
+                'addressCountry' => 'IN',
+            ],
+            'contactPoint' => [
+                '@type' => 'ContactPoint',
+                'contactType' => 'customer service',
+                'telephone' => '+91-98765-43210',
+                'email' => 'hello@bizmarket.in',
+                'areaServed' => 'IN',
+            ],
+        ],
+        [
+            '@type' => 'WebSite',
+            'name' => 'BizMarket',
+            'url' => url('/'),
+        ],
+    ],
+];
+@endphp
+<script type="application/ld+json">
+{!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+@endpush
+
 {{-- Hero --}}
 <section class="hero-section">
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
     <div class="container">
         <div class="hero-inner">
-            <div class="hero-content">
+            {{-- Slide in gracefully from left --}}
+            <div class="hero-content reveal-left">
                 <p class="section-label">11 Business Categories · Ready to Launch</p>
                 <h1 class="hero-title">
                     Get your business<br/>
@@ -40,7 +82,9 @@
                     </p>
                 </div>
             </div>
-            <div class="hero-visual" aria-hidden="true">
+            
+            {{-- Clip-path reveal for mockup from right --}}
+            <div class="hero-visual reveal-clip" aria-hidden="true">
                 <div class="hero-mockup">
                     <div class="mockup-browser-bar">
                         <span class="browser-dot red"></span>
@@ -64,7 +108,8 @@
 {{-- Stats Bar --}}
 <section class="stats-bar">
     <div class="container">
-        <div class="stats-bar-inner">
+        {{-- Stagger triggers the sequential animation and the counter --}}
+        <div class="stats-bar-inner stagger">
             <div class="stats-bar-item">
                 <div class="stats-bar-number">11</div>
                 <div class="stats-bar-label">Business categories</div>
@@ -88,7 +133,7 @@
 {{-- Categories --}}
 <section class="section bg-ivory">
     <div class="container">
-        <div class="section-header text-center">
+        <div class="section-header text-center reveal-up">
             <p class="section-label">What we cover</p>
             <h2 class="section-title">Templates for every local business</h2>
             <p class="section-subtitle mx-auto">
@@ -96,7 +141,7 @@
                 your customers think and what they need from you.
             </p>
         </div>
-        <div class="category-grid">
+        <div class="category-grid stagger">
             @foreach($categories as $category)
             <a href="{{ route('templates.category', $category->slug) }}" class="category-card">
                 <span class="category-emoji">{{ $category->icon }}</span>
@@ -111,11 +156,11 @@
 {{-- How It Works --}}
 <section class="section bg-ivory-dark">
     <div class="container">
-        <div class="section-header text-center">
+        <div class="section-header text-center reveal-up">
             <p class="section-label">The process</p>
             <h2 class="section-title">From browsing to live website in three steps</h2>
         </div>
-        <div class="steps-grid">
+        <div class="steps-grid stagger">
             <div class="step-card">
                 <div class="step-icon">🔍</div>
                 <h3 class="step-title">Browse & preview</h3>
@@ -138,14 +183,14 @@
 {{-- Featured Templates --}}
 <section class="section bg-ivory">
     <div class="container">
-        <div class="section-header-row">
+        <div class="section-header-row reveal-up">
             <div>
                 <p class="section-label">Hand-picked</p>
                 <h2 class="section-title mb-0">Featured templates</h2>
             </div>
             <a href="{{ route('templates.index') }}" class="btn btn-outline">View all →</a>
         </div>
-        <div class="featured-grid">
+        <div class="featured-grid stagger">
             @foreach($featured as $template)
             <article class="card">
                 <div class="template-preview-thumb" style="background:linear-gradient(135deg,var(--navy),var(--blue));">
@@ -168,7 +213,7 @@
 
 {{-- CTA --}}
 <section class="cta-band">
-    <div class="container text-center">
+    <div class="container text-center reveal-up">
         <p class="section-label" style="color:var(--gold-light);">Ready to start?</p>
         <h2 class="cta-title">Your business deserves to be found online</h2>
         <p class="cta-subtitle">Browse 11 template categories and get your website live within 48 hours.</p>

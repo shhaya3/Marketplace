@@ -242,3 +242,11 @@
     .templates-content { padding: 20px 0 0; }
     .templates-grid { grid-template-columns: 1fr; }
 }
+
+@media (max-width: 768px) {
+    .search-bar { flex-direction: column; align-items: stretch; gap: 12px; padding: 16px; }
+    .search-bar-input { width: 100%; }
+    .search-count { align-self: flex-start; white-space: nowrap; }
+    .page-header h1 { font-size: 26px; }
+    .breadcrumb { font-size: 12px; }
+}

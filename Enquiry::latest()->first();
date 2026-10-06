@@ -1,0 +1,13 @@
+[90m= [39m[34;4mApp\Models\Enquiry[39;24m {#8568
+    [34mid[39m: [35m6[39m,
+    [34mtemplate_id[39m: [36mnull[39m,
+    [34mfull_name[39m: [32m"[39m[32mtest[39m[32m"[39m,
+    [34memail[39m: [32m"[39m[32mtest@gmail.com[39m[32m"[39m,
+    [34mphone[39m: [32m"[39m[32m1234589678[39m[32m"[39m,
+    [34mbusiness_name[39m: [32m"[39m[32mtest[39m[32m"[39m,
+    [34mbusiness_category[39m: [36mnull[39m,
+    [34mmessage[39m: [32m"[39m[32mteasd asdwasf asdw[39m[32m"[39m,
+    [34mstatus[39m: [32m"[39m[32munread[39m[32m"[39m,
+    [34mcreated_at[39m: [32m"[39m[32m2026-10-03 11:23:42[39m[32m"[39m,
+    [34mupdated_at[39m: [32m"[39m[32m2026-10-03 11:23:42[39m[32m"[39m,
+  }

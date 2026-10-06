@@ -2,6 +2,8 @@
 
 @section('title', 'Contact — BizMarket')
 @section('meta_description', 'Get in touch with BizMarket. We respond to every enquiry within one working day.')
+@section('og_title', 'BizMarket — Get Your Business Online Today')
+@section('og_description', '11 business categories. Browse, preview, and launch a professional website in 48 hours.')
 
 @section('content')
 
@@ -68,7 +70,14 @@
     {{-- Form --}}
     <main class="contact-form-panel">
         @if(session('success'))
-        <div class="alert alert-success">✅ {{ session('success') }}</div>
+        <div class="enquiry-success-card">
+            <div class="enquiry-success-icon">✅</div>
+            <h2 class="enquiry-success-title">Message sent!</h2>
+            <p class="enquiry-success-text">{{ session('success') }}</p>
+            <a href="{{ route('home') }}" class="btn btn-navy btn-sm">Back to home</a>
+        </div>
+        @else
+            {{-- existing form markup stays here, unchanged --}}
         @endif
 
         <h2 class="contact-form-title">Send us a message</h2>
@@ -98,6 +107,7 @@
                     <input type="tel" id="phone" name="phone"
                            class="form-input-line"
                            value="{{ old('phone') }}" placeholder="+91 98765 43210"/>
+                    @error('phone')<p class="form-error">{{ $message }}</p>@enderror
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="business_name">Business name</label>

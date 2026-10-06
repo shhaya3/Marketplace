@@ -10,19 +10,27 @@ class EnquiryController extends Controller
 {
     public function index()
     {
-        $enquiries = Enquiry::latest()->paginate(20);
-        return view('admin.enquiries.index', compact('enquiries'));
+        $unread = Enquiry::where('status', 'unread')->latest()->get();
+        $read = Enquiry::where('status', 'read')->latest()->get();
+        $resolved = Enquiry::where('status', 'resolved')->latest()->get();
+
+        return view('admin.enquiries.index', compact('unread', 'read', 'resolved'));
     }
 
     public function show(Enquiry $enquiry)
     {
-        $enquiry->update(['status' => 'read']);
+        // Pure read-only view: will never overwrite 'resolved' or 'unread'
         return view('admin.enquiries.show', compact('enquiry'));
     }
 
     public function update(Request $request, Enquiry $enquiry)
     {
-        $enquiry->update(['status' => $request->status]);
-        return back()->with('success', 'Enquiry status updated.');
+        $validated = $request->validate([
+            'status' => 'required|in:unread,read,resolved',
+        ]);
+
+        $enquiry->update(['status' => $validated['status']]);
+
+        return back()->with('success', 'Enquiry status updated to ' . ucfirst($validated['status']) . '.');
     }
 }

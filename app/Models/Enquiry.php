@@ -10,14 +10,13 @@ class Enquiry extends Model
     use HasFactory;
 
     protected $fillable = [
-        'template_id',
-        'full_name',
-        'email',
-        'phone',
-        'business_name',
-        'business_category',
-        'message',
-        'status',
+        'full_name', 
+        'email', 
+        'phone', 
+        'business_name', 
+        'business_category', 
+        'message', 
+        'status'
     ];
 
     public function template()

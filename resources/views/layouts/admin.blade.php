@@ -6,15 +6,33 @@
     <title>@yield('title', 'Admin — BizMarket')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body class="admin-body">
+
 <div class="admin-shell">
+    <!-- Mobile Header Bar (Hidden on desktop) -->
+    <header class="admin-mobile-bar">
+        <button type="button" class="admin-menu-toggle" aria-label="Open menu">☰</button>
+        <a href="{{ route('home') }}" class="admin-mobile-brand">
+            Biz<span class="brand-accent">Market</span>
+        </a>
+        <span class="admin-mobile-badge">Admin</span>
+    </header>
+
+    <!-- Mobile Drawer Backdrop -->
+    <div class="admin-overlay"></div>
+
+    <!-- Sidebar (Docked on desktop, drawer on mobile) -->
     <aside class="admin-sidebar">
         <div class="admin-sidebar-header">
-            <a href="{{ route('home') }}" class="admin-sidebar-brand">
-                Biz<span class="brand-accent">Market</span>
-            </a>
-            <div class="admin-sidebar-tag">Admin panel</div>
+            <div>
+                <a href="{{ route('home') }}" class="admin-sidebar-brand">
+                    Biz<span class="brand-accent">Market</span>
+                </a>
+                <div class="admin-sidebar-tag">Admin panel</div>
+            </div>
+            <button type="button" class="admin-sidebar-close" aria-label="Close menu">✕</button>
         </div>
+
         <nav class="admin-nav">
             <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 📊 Dashboard
@@ -29,6 +47,7 @@
                 🏷️ Categories
             </a>
         </nav>
+
         <div class="admin-sidebar-footer">
             <div class="admin-sidebar-user">{{ auth()->user()->name }}</div>
             <form method="POST" action="{{ route('logout') }}">
@@ -37,11 +56,13 @@
             </form>
         </div>
     </aside>
+
     <main class="admin-main">
         <div class="admin-content">
             @yield('content')
         </div>
     </main>
 </div>
+
 </body>
 </html>

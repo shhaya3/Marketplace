@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TemplateController as AdminTemplateController;
 use App\Http\Controllers\Admin\EnquiryController as AdminEnquiryController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\SitemapController;
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 // ── Public routes ──────────────────────────────────────────
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -40,3 +43,5 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('enquiries/{enquiry}', [AdminEnquiryController::class, 'show'])->name('enquiries.show');
     Route::patch('enquiries/{enquiry}', [AdminEnquiryController::class, 'update'])->name('enquiries.update');
 });
+
+

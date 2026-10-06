@@ -1,9 +1,41 @@
 @extends('layouts.app')
 
-@section('title', $template->meta_title ?? $template->name . ' — BizMarket')
-@section('meta_description', $template->meta_description ?? $template->short_description)
+@section('title', $template->name . ' Website Template — BizMarket')
+@section('meta_description', $template->short_description)
+@section('og_title', $template->name . ' — ' . $template->category->name . ' Website Template')
+@section('og_description', $template->short_description)
 
 @section('content')
+
+@push('structured_data')
+@php
+$schema = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Templates', 'item' => route('templates.index')],
+                ['@type' => 'ListItem', 'position' => 3, 'name' => $template->name, 'item' => route('templates.show', $template->slug)],
+            ],
+        ],
+        [
+            '@type' => 'CreativeWork',
+            'name' => $template->name,
+            'description' => $template->short_description,
+            'genre' => $template->category->name,
+            'url' => route('templates.show', $template->slug),
+            'publisher' => ['@type' => 'Organization', 'name' => 'BizMarket'],
+        ],
+    ],
+];
+@endphp
+<script type="application/ld+json">
+{!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+@endpush
+
 
 {{-- Hero --}}
 <div class="page-header">

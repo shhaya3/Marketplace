@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Browse Templates — BizMarket')
-@section('meta_description', '11 business categories. Fully responsive. Ready to customise and launch.')
+@section('title', 'Browse Website Templates — BizMarket')
+@section('meta_description', 'Browse 11 categories of professional website templates for Indian local businesses. Preview live demos before you commit.')
 
 @section('content')
 
