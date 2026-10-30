@@ -152,4 +152,4 @@ Main tables: `categories`, `templates`, `template_features`, `template_pages`, `
 
 ## Author
 
-[Your name], intern at Easy2IT Techno Solutions LLP, Nagpur.
+Sohail Ansari
