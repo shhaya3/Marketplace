@@ -10,9 +10,13 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             return redirect()->route('login')
                 ->with('error', 'Please log in to access the admin panel.');
+        }
+
+        if (! auth()->user()->isAdmin()) {
+            abort(403, 'You do not have permission to access the admin area.');
         }
 
         return $next($request);

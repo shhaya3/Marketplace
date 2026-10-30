@@ -4,21 +4,73 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::withCount('templates')
-            ->orderBy('sort_order')
-            ->get();
+        $categories = Category::withCount('templates')->orderBy('sort_order')->get();
         return view('admin.categories.index', compact('categories'));
     }
 
-    public function create() { return redirect()->route('admin.categories.index'); }
-    public function store() { return redirect()->route('admin.categories.index'); }
-    public function show() { return redirect()->route('admin.categories.index'); }
-    public function edit() { return redirect()->route('admin.categories.index'); }
-    public function update() { return redirect()->route('admin.categories.index'); }
-    public function destroy() { return redirect()->route('admin.categories.index'); }
+    public function create()
+    {
+        return view('admin.categories.create');
+    }
+
+    public function store(Request $request)
+    {
+        $data = $this->validated($request);
+        Category::create($data);
+
+        return redirect()->route('admin.categories.index')
+            ->with('success', 'Category created.');
+    }
+
+    public function edit(Category $category)
+    {
+        return view('admin.categories.edit', compact('category'));
+    }
+
+    public function update(Request $request, Category $category)
+    {
+        $data = $this->validated($request, $category);
+        $category->update($data);
+
+        return redirect()->route('admin.categories.index')
+            ->with('success', 'Category updated.');
+    }
+
+    public function destroy(Category $category)
+    {
+        if ($category->templates()->exists()) {
+            return back()->with('error', 'This category still has templates. Move or delete them first.');
+        }
+
+        $category->delete();
+
+        return back()->with('success', 'Category deleted.');
+    }
+
+    private function validated(Request $request, ?Category $category = null): array
+    {
+        $request->merge([
+            'slug' => Str::slug($request->input('slug') ?: $request->input('name')),
+        ]);
+
+        $data = $request->validate([
+            'name'       => ['required', 'string', 'max:100'],
+            'slug'       => ['required', 'string', 'max:120', Rule::unique('categories', 'slug')->ignore($category?->id)],
+            'icon'       => ['nullable', 'string', 'max:10'],
+            'sort_order' => ['nullable', 'integer', 'min:0'],
+        ]);
+
+        $data['sort_order'] = $data['sort_order'] ?? 0;
+        $data['is_active']  = $request->boolean('is_active');
+
+        return $data;
+    }
 }

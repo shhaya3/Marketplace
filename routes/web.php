@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\TemplateController as AdminTemplateController;
 use App\Http\Controllers\Admin\EnquiryController as AdminEnquiryController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\Admin\TemplateContentController;
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
@@ -42,6 +43,18 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('enquiries', [AdminEnquiryController::class, 'index'])->name('enquiries.index');
     Route::get('enquiries/{enquiry}', [AdminEnquiryController::class, 'show'])->name('enquiries.show');
     Route::patch('enquiries/{enquiry}', [AdminEnquiryController::class, 'update'])->name('enquiries.update');
+    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class)
+        ->except('show');
+    Route::get('templates/{template}/content', [TemplateContentController::class, 'edit'])->name('templates.content');
+    Route::post('templates/{template}/features', [TemplateContentController::class, 'storeFeature'])->name('templates.features.store');
+    Route::delete('templates/{template}/features/{feature}', [TemplateContentController::class, 'destroyFeature'])->name('templates.features.destroy');
+    Route::post('templates/{template}/pages', [TemplateContentController::class, 'storePage'])->name('templates.pages.store');
+    Route::delete('templates/{template}/pages/{page}', [TemplateContentController::class, 'destroyPage'])->name('templates.pages.destroy');
+    Route::get('enquiries/export/csv', [\App\Http\Controllers\Admin\EnquiryController::class, 'exportCsv'])
+        ->name('enquiries.export');
+    Route::get('enquiries/export/pdf', [\App\Http\Controllers\Admin\EnquiryController::class, 'exportPdf'])
+        ->name('enquiries.export.pdf');
 });
+
 
 

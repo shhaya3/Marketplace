@@ -12,6 +12,8 @@ export default defineConfig({
                 'resources/css/tailwind.css',
                 'resources/js/app.js', 
                 'resources/js/mobile-menu.js',
+                'resources/js/templates-live-search.js',
+                'resources/js/admin-charts.js',
                 
                 // 2. Restaurant
                 'resources/css/pages/templates/restaurant.css',

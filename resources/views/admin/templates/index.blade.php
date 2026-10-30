@@ -42,13 +42,14 @@
                 </td>
                 <td class="muted">{{ $template->view_count }}</td>
                 <td>
-                    <div class="table-actions">
-                        <a href="{{ route('templates.show', $template->slug) }}" target="_blank" class="action-link-blue">Preview</a>
-                        <a href="{{ route('admin.templates.edit', $template) }}" class="action-link-gold">Edit</a>
+                    <div class="row-actions">
+                        <a href="{{ route('templates.show', $template->slug) }}" target="_blank" class="row-btn row-btn-gray">Preview</a>
+                        <a href="{{ route('admin.templates.edit', $template) }}" class="row-btn row-btn-gold">Edit</a>
+                        <a href="{{ route('admin.templates.content', $template) }}" class="row-btn row-btn-blue">Content</a>
                         <form method="POST" action="{{ route('admin.templates.destroy', $template) }}"
                               onsubmit="return confirm('Delete this template?')">
                             @csrf @method('DELETE')
-                            <button type="submit" class="action-link-red">Delete</button>
+                            <button type="submit" class="row-btn row-btn-red">Delete</button>
                         </form>
                     </div>
                 </td>

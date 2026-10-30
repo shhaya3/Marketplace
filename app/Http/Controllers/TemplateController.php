@@ -22,8 +22,10 @@ class TemplateController extends Controller
                 );
             })
             ->when($request->search, function ($query) use ($request) {
-                $query->where('name', 'like', '%' . $request->search . '%')
+                $query->where(function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->search . '%')
                       ->orWhere('short_description', 'like', '%' . $request->search . '%');
+                });
             })
             ->paginate(12);
 

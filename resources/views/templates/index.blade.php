@@ -20,14 +20,16 @@
             <span class="search-bar-icon" aria-hidden="true">🔍</span>
             <input
                 type="search"
+                id="templateSearch"
                 name="search"
+                autocomplete="off"
                 value="{{ request('search') }}"
                 class="search-bar-input"
                 placeholder="Search by business type, feature, or keyword…"
                 aria-label="Search templates"
             />
-            <input type="hidden" name="category" value="{{ request('category') }}"/>
-            <div class="search-count" aria-live="polite">
+            <input type="hidden" name="category" value="{{ request('category', $category->slug ?? '') }}"/>
+            <div class="search-count" id="searchCount" aria-live="polite">
                 Showing <strong>{{ $templates->total() }}</strong> templates
             </div>
             <button type="submit" class="btn btn-primary btn-sm">Search</button>
@@ -62,7 +64,7 @@
     {{-- Content --}}
     <main class="templates-content">
         <div class="templates-toolbar">
-            <p class="templates-result-info">
+            <p class="templates-result-info" id="resultCount">
                 <strong>{{ $templates->total() }}</strong> templates found
                 @if(request('search'))
                     for "<strong>{{ request('search') }}</strong>"
@@ -76,47 +78,50 @@
             @endif
         </div>
 
-        @if($templates->count() > 0)
-        <div class="templates-grid">
-            @foreach($templates as $template)
-            <article class="t-card">
-                <div class="t-preview" style="background:linear-gradient(140deg,var(--navy),var(--blue));">
-                    {{ $template->category->icon }}
-                    <div class="t-overlay">
-                        <a href="{{ route('templates.preview', $template->slug) }}" class="t-overlay-btn primary">
-                            Preview template
-                        </a>
-                        <a href="{{ route('templates.show', $template->slug) }}" class="t-overlay-btn secondary">
-                            View details
-                        </a>
+        <div id="templatesResults" data-api="{{ url('/api/templates') }}" data-clear="{{ route('templates.index') }}">
+            @if($templates->count() > 0)
+            <div class="templates-grid">
+                @foreach($templates as $template)
+                <article class="t-card">
+                    <div class="t-preview" style="background:linear-gradient(140deg,var(--navy),var(--blue));">
+                        {{ $template->category->icon }}
+                        <div class="t-overlay">
+                            <a href="{{ route('templates.preview', $template->slug) }}" class="t-overlay-btn primary">
+                                Preview template
+                            </a>
+                            <a href="{{ route('templates.show', $template->slug) }}" class="t-overlay-btn secondary">
+                                View details
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="t-body">
-                    <span class="badge badge-gold">{{ $template->category->icon }} {{ $template->category->name }}</span>
-                    <h2 class="t-name">{{ $template->name }}</h2>
-                    <p class="t-desc">{{ $template->short_description }}</p>
-                    <div class="t-meta">
-                        <span class="t-views">👁 {{ $template->view_count }} views</span>
-                        <a href="{{ route('templates.show', $template->slug) }}" class="t-action">Details →</a>
+                    <div class="t-body">
+                        <span class="badge badge-gold">{{ $template->category->icon }} {{ $template->category->name }}</span>
+                        <h2 class="t-name">{{ $template->name }}</h2>
+                        <p class="t-desc">{{ $template->short_description }}</p>
+                        <div class="t-meta">
+                            <span class="t-views">👁 {{ $template->view_count }} views</span>
+                            <a href="{{ route('templates.show', $template->slug) }}" class="t-action">Details →</a>
+                        </div>
                     </div>
-                </div>
-            </article>
-            @endforeach
-        </div>
+                </article>
+                @endforeach
+            </div>
 
-        <div style="margin-top:40px;">
-            {{ $templates->withQueryString()->links() }}
-        </div>
+            <div style="margin-top:40px;">
+                {{ $templates->withQueryString()->links() }}
+            </div>
 
-        @else
-        <div class="empty-state">
-            <div class="empty-state-icon">🔍</div>
-            <h3 class="empty-state-title">No templates found</h3>
-            <p class="empty-state-desc">Try a different search term or clear the category filter.</p>
-            <a href="{{ route('templates.index') }}" class="btn btn-primary">Clear filters</a>
+            @else
+            <div class="empty-state">
+                <div class="empty-state-icon">🔍</div>
+                <h3 class="empty-state-title">No templates found</h3>
+                <p class="empty-state-desc">Try a different search term or clear the category filter.</p>
+                <a href="{{ route('templates.index') }}" class="btn btn-primary">Clear filters</a>
+            </div>
+            @endif
         </div>
-        @endif
     </main>
 </div>
 
+@vite(['resources/js/templates-live-search.js'])
 @endsection
